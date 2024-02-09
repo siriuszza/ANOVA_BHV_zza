@@ -10,8 +10,7 @@ for trees in *.txt
 do
 	java -jar SturmMean.jar -e 0.0001 -u $trees |
 		tail -n 1 > ../mean_trees/${trees%.txt}_mean.txt
-	(cat $trees; echo "") >> all_tree
-
+	cat $trees >> all_tree
 done
 
 java -jar SturmMean.jar -e 0.0001 -u all_tree |

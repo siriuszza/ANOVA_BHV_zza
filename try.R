@@ -24,14 +24,17 @@ n = c(3, 9)
 k = length(n)
 N = sum(n)
 
-dis = c(1.90852, 0.816329)
+dis_1 = as.numeric(read.table("./distances/triangle_dis.txt"))
+dis_2 = as.numeric(read.table("./distances/weighted_quadrilateral_dis.txt"))
+dis = c(dis_1, dis_2)
 
-dis1 = read.table("./mean_trees/triangle_dis_sep.txt")
-dis2 = read.table("./mean_trees/weighted_quadrilateral_dis_sep.txt")
+dis_sep1 = read.table("./distances/triangle_dis_sep.txt")
+dis_sep2 = read.table("./distances/weighted_quadrilateral_dis_sep.txt")
 
-fz = ( sum(n * dis^2) / (k - 1) )
-fm = ( (sum(dis1^2) + sum(dis2^2)) / (N-k) )
-Fs = fz / fm
+numerator = ( sum(n * dis^2) / (k - 1) )
+denominator = ( (sum(dis_sep1^2) + sum(dis_sep2^2)) / (N-k) )
+
+Fs = numerator / denominator
 Fs > qf(1-0.05, k-1, N-k)
 
 pf(Fs, k-1, N-k, lower.tail = FALSE)
