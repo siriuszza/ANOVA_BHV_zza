@@ -1,25 +1,17 @@
-# library(distory)
-# 
-# newick1 <- "((1:1,(2:1,3:1):4):4,4:1);"
-# newick2 <- "(((4:1,3:1):4,2:1):4,1:1);"
-# 
-# tree1 <- read.tree(text = newick1)
-# tree2 <- read.tree(text = newick2)
-# trees <- list(tree1, tree2)
-# 
-# distances <- dist.multiPhylo(trees, method = "geodesic")
-# 
-# print(distances)
-
-library(distory)
-
+library(ape)
 tree1 <- read.tree("./mean_trees/triangle_mean.txt")
 tree2 <- read.tree("./mean_trees/weighted_quadrilateral_mean.txt")
-plot(tree1)
-plot(tree2)
+par(mfrow = c(1,2))
+plot.phylo(tree1, type = "cladogram")
+plot.phylo(tree2, type = "cladogram")
 
 ## ANOVA
-n = c(3, 9)
+# tree_files = list.files("./samples_tree/", pattern = "\\.txt$")
+n = c()
+for (file in tree_files){
+  num_lines <- length(readLines(file.path("samples_tree", file)))
+  n = c(n, num_lines)
+}
 
 k = length(n)
 N = sum(n)
@@ -39,3 +31,4 @@ Fs > qf(1-0.05, k-1, N-k)
 
 pf(Fs, k-1, N-k, lower.tail = FALSE)
 
+library(TreeSim)
