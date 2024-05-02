@@ -17,7 +17,7 @@ cat("", file = all_tree_file)
 tree_files = list.files(pattern = "\\.txt$")
 
 for (tree in tree_files) {
-  java_cmd = sprintf("java -jar %s -e 0.0001 -u %s",
+  java_cmd = sprintf("java -jar %s -n 1000000 -e 0.0001 %s",
                      sturm_mean_jar, tree)
   
   mean_tree = system(java_cmd, intern = TRUE)
@@ -32,7 +32,7 @@ for (tree in tree_files) {
   file.append(all_tree_file, tree)
 }
 
-java_cmd_all = sprintf("java -jar %s -e 0.0001 -u %s",
+java_cmd_all = sprintf("java -jar %s -e 0.0001 -n 1000000 %s",
                        sturm_mean_jar, all_tree_file)
 mean_all = system(java_cmd_all, intern = TRUE)
 mean_all_last_line = tail(mean_all, n = 1)
