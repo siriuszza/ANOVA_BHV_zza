@@ -55,8 +55,10 @@ get_F = function(tree_lists, n, k, N) {
   }
   
   denominator = denominator / (N - k)
-  
+  print(numerator)
+  print(denominator)
   return (numerator / denominator)
+  #return(c(numerator,denominator,numerator / denominator))
 }
 
 
@@ -84,17 +86,17 @@ for (i in 1:k){
 
 # get_F(TLs)
 start_time <- Sys.time()
-F_obs = get_F(TLs)
+F_obs = get_F(TLs,n,k,N)
 end_time <- Sys.time()
 print(end_time - start_time)
 
-all_trees = readLines("./samples_tree/all_tree")
+all_trees = readLines("./samples_tree/all_tree.txt")
 # sample(all_trees)
 
 set.seed(123) # for reproducibility
-n_perm <- 10
+n_perm <- 1
 perm_stats <- numeric(n_perm)
-
+#perm_stats <- list()
 for (i in 1:n_perm) {
   print(i)
   # Shuffle data
@@ -103,13 +105,14 @@ for (i in 1:n_perm) {
   start_pos = 1
   n_cum = cumsum(n)
   tree_lists_temp = list()
-  for (i in 1:k){
-    perm_temp = shuffled_tree[start_pos:n_cum[i]]
-    start_pos = start_pos + n[i]
-    tree_lists_temp[[i]] = perm_temp
+  for (j in 1:k){
+    perm_temp = shuffled_tree[start_pos:n_cum[j]]
+    start_pos = start_pos + n[j]
+    tree_lists_temp[[j]] = perm_temp
   }
 
-  perm_stats[i] <- get_F(tree_lists_temp)
+  #perm_stats[[i]] <- get_F(tree_lists_temp,n,k,N)
+  perm_stats[i] <- get_F(tree_lists_temp,n,k,N)
 }
 
 p_value <- mean(perm_stats >= F_obs)
