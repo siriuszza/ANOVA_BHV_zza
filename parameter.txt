@@ -1,4 +1,4 @@
 num_trees alpha beta epsilon N
 50 1 -1.9 1 10
 60 1 -1.5 1 10
-40 0.5 -1.0 1 10
+70 1 0 1 10
